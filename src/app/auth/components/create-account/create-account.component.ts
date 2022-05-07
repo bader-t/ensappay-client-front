@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
 import { AccountService } from '../../services/account.service';
 @Component({
   selector: 'app-create-account',
@@ -22,7 +23,8 @@ export class CreateAccountComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class CreateAccountComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.alertService.clear();
     if (this.accountForm.invalid) {
       return;
     }
@@ -43,9 +46,11 @@ export class CreateAccountComponent implements OnInit {
 
     this.accountService.register(this.accountForm.value).subscribe(
         {
-          next: (v: any) => console.log(v),
-          error: (e: any) => console.error(e),
-          complete: () => console.info('complete')
+          next: (v: any) => {this.alertService.success(v);
+            this.loading = false;},
+          error: (e: any) => {this.alertService.error(e.statusText);
+          this.loading = false;},
+          complete: () => {this.alertService.success("Votre demande est envoyée avec succé")}
         }
       );;
   }

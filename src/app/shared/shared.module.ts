@@ -5,13 +5,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   exports:[
     HeaderComponent,
     FooterComponent,
+    AlertComponent,
     ReactiveFormsModule,
     HttpClientModule
   ]

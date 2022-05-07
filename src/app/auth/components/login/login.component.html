@@ -1,32 +1,30 @@
-<div class="container mt-5 pt-5">
-  <div class="card col-12 col-sm-7 col-md-6 m-auto">
-    <div class="card-body bg-light">
-      <h4 class="text-center my-2">S'identifier</h4>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="bg-white p-3">
-        <div class="mb-3">
-          <label for="phone" class="form-label">Identifiant</label>
-          <input formControlName="phone" type="text" class="form-control" placeholder="Entrer votre numéro de téléphone"
-            [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
-          <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-            <div *ngIf="f['phone'].errors['required']">Entrer un numéro de téléphone</div>
-          </div>
+<div class="card col-12 col-sm-7 col-md-6 m-auto">
+  <div class="card-body bg-light">
+    <h4 class="text-center my-2">S'identifier</h4>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="bg-white p-3">
+      <div class="mb-3">
+        <label for="phone" class="form-label">Numéro de téléphone</label>
+        <input formControlName="phone" type="text" class="form-control" placeholder="Entrer votre numéro de téléphone"
+          [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
+        <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+          <div *ngIf="f['phone'].errors['required']">Entrer un numéro de téléphone</div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Mot de passe</label>
-          <input formControlName="password" type="password" class="form-control" placeholder="Entrer votre mot de passe"
-            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
-          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-            <div *ngIf="f['password'].errors['required']">Entrer un numéro de téléphone</div>
-          </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input formControlName="password" type="password" class="form-control" placeholder="Entrer votre mot de passe"
+          [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors['required']">Entrer un numéro de téléphone</div>
         </div>
+      </div>
 
-        <p>Vous voulez ouvrir un compte ?&nbsp;<a class="link" routerLink="/auth/create-account">Demander</a></p>
+      <p>Vous voulez ouvrir un compte ?&nbsp;<a class="link" routerLink="/auth/create-account">Demander</a></p>
 
-        <button type="submit" class="btn btn-primary mt-2 w-100">S'identifier</button>
+      <button type="submit" class="btn btn-primary mt-2 w-100">S'identifier</button>
 
 
-      </form>
-    </div>
-
+    </form>
   </div>
+
 </div>
