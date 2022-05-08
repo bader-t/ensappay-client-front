@@ -10,38 +10,46 @@ import { Client } from 'src/app/shared/models/client.model';
 export class AuthService {
 
   private clientSubject: BehaviorSubject<Client>;
-  // public client: Client;
+  public client: Observable<Client>;
   private clientUrl: string;
 
-  client = "";
-  constructor(private http: HttpClient,private router: Router) {
-    this.clientUrl = 'http://localhost:8080/api/auth/';
-    this.clientSubject = new BehaviorSubject<Client>(JSON.parse(localStorage.getItem('client') || '{}'));
-    // this.client = this.clientSubject.value;
 
+  constructor(private http: HttpClient, private router: Router) {
+    this.clientUrl = 'http://localhost:8080/api/';
+    this.clientSubject = new BehaviorSubject<Client>(JSON.parse(localStorage.getItem('client') || '{}'));
+    this.client = this.clientSubject.asObservable();
   }
 
-  login(phone: string, password: string) {
-    return this.http.post<Client>(this.clientUrl + "login", { phone, password })
-        .pipe(map(client => {
-            localStorage.setItem('client', JSON.stringify(client));
-            this.clientSubject.next(client);
-            return client;
-        }));
+  public get clientValue(): Client {
+    return this.clientSubject.value;
+  }
+
+  login(phoneNumber: string, password: string) {
+    return this.http.post<Client>(this.clientUrl + "login", { phoneNumber, password })
+      .pipe(map(client => {
+        localStorage.setItem('client', JSON.stringify(client));
+        this.clientSubject.next(client);
+        return client;
+      }));
   }
 
   isLoggedIn() {
     console.log(this.client);
-    return !(this.client === "");
-  }
-  isPasswordNotReseted() {
-    console.log(this.client);
-    return false;
+    return !(this.clientSubject === null);
   }
 
-  logout(){
-    this.client = "";
+  isFirstLogin() {
+    return this.clientValue.isFirstLogin;
+  }
+
+  changePassword(model: any) {
+    return this.http.post(this.clientUrl + "account/client/change-password", model);
+  }
+
+
+  logout() {
     localStorage.removeItem('client');
+    this.clientSubject.next(null!);
     this.router.navigate(['']);
   }
 }

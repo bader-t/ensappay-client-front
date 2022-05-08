@@ -25,7 +25,7 @@ export class CreateAccountComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
   }
@@ -45,14 +45,20 @@ export class CreateAccountComponent implements OnInit {
   private createAccount() {
 
     this.accountService.register(this.accountForm.value).subscribe(
-        {
-          next: (v: any) => {this.alertService.success(v);
-            this.loading = false;},
-          error: (e: any) => {this.alertService.error(e.statusText);
-          this.loading = false;},
-          complete: () => {this.alertService.success("Votre demande est envoyée avec succé")}
+      {
+        next: (v: any) => {
+          this.alertService.success(v);
+          this.loading = false;
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+          this.loading = false;
+        },
+        complete: () => {
+          this.alertService.success("Votre demande est envoyée avec succé");
         }
-      );;
+      }
+    );
   }
 
 }

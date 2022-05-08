@@ -3,11 +3,12 @@
     <h4 class="text-center my-2">S'identifier</h4>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="bg-white p-3">
       <div class="mb-3">
-        <label for="phone" class="form-label">Numéro de téléphone</label>
-        <input formControlName="phone" type="text" class="form-control" placeholder="Entrer votre numéro de téléphone"
-          [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
-        <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-          <div *ngIf="f['phone'].errors['required']">Entrer un numéro de téléphone</div>
+        <label for="phoneNumber" class="form-label">Numéro de téléphone</label>
+        <input formControlName="phoneNumber" type="text" class="form-control"
+          placeholder="Entrer votre numéro de téléphone"
+          [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }">
+        <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+          <div *ngIf="f['phoneNumber'].errors['required']">Entrer un numéro de téléphone</div>
         </div>
       </div>
       <div class="mb-3">

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,21 +12,44 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   submitted = false;
   loginForm = new FormGroup({
-    phone: new FormControl('', Validators.required),
-    password: new FormControl('',  Validators.required),
+    phoneNumber: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
-  constructor() { }
+
+  constructor(private alertService: AlertService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
+
+
 
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
     this.submitted = true;
+    this.alertService.clear();
+
     if (this.loginForm.invalid) {
       return;
     }
-  }
 
+    this.authService.login(this.f['phoneNumber'].value, this.f['password'].value).subscribe(
+      {
+        next: (v: any) => {
+          this.alertService.success(v);
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+        },
+        complete: () => {
+          this.alertService.success("Succé");
+          this.router.navigate(['']);
+        }
+      }
+    );
+
+
+  }
 }
+
+

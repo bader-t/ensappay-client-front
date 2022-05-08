@@ -2,6 +2,7 @@ export class Client {
   productType!: string;
   name!: string;
   surname!: string;
-  phone!: string;
+  phoneNumber!: string;
   email!: string;
+  isFirstLogin!: boolean;
 }
