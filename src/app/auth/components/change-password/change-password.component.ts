@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { AuthService } from '../../services/auth.service';
+import { TokenStorageService } from '../../services/token-storage.service';
 
 @Component({
   selector: 'app-change-password',
@@ -19,7 +20,7 @@ export class ChangePasswordComponent implements OnInit {
   });
 
 
-  constructor(private alertService: AlertService, private authService: AuthService, private router: Router) { }
+  constructor(private alertService: AlertService, private authService: AuthService, private router: Router, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +35,7 @@ export class ChangePasswordComponent implements OnInit {
     this.authService.changePassword(this.changePasswordForm.value).subscribe({
       next: (v: any) => {
         this.alertService.success(v);
+        this.tokenStorage.setIsFirstLogin('false');
         this.loading = false;
       },
       error: (e: any) => {

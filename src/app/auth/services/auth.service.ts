@@ -1,55 +1,61 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Client } from 'src/app/shared/models/client.model';
+import { TokenStorageService } from './token-storage.service';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' })
+};
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private clientSubject: BehaviorSubject<Client>;
-  public client: Observable<Client>;
   private clientUrl: string;
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private tokenStorage: TokenStorageService) {
     this.clientUrl = 'http://localhost:8080/api/';
-    this.clientSubject = new BehaviorSubject<Client>(JSON.parse(localStorage.getItem('client') || '{}'));
-    this.client = this.clientSubject.asObservable();
   }
 
-  public get clientValue(): Client {
-    return this.clientSubject.value;
+
+
+  login(phoneNumber: string, password: string): Observable<any> {
+    return this.http.post(this.clientUrl + 'login', {
+      phoneNumber,
+      password
+    }, httpOptions);
   }
 
-  login(phoneNumber: string, password: string) {
-    return this.http.post<Client>(this.clientUrl + "login", { phoneNumber, password })
-      .pipe(map(client => {
-        localStorage.setItem('client', JSON.stringify(client));
-        this.clientSubject.next(client);
-        return client;
-      }));
-  }
 
   isLoggedIn() {
-    console.log(this.client);
-    return !(this.clientSubject === null);
+    return !(this.tokenStorage.getToken() === null);
   }
 
   isFirstLogin() {
-    return this.clientValue.isFirstLogin;
+    return this.tokenStorage.getIsFirstLogin();
   }
 
   changePassword(model: any) {
     return this.http.post(this.clientUrl + "account/client/change-password", model);
   }
 
-
-  logout() {
-    localStorage.removeItem('client');
-    this.clientSubject.next(null!);
-    this.router.navigate(['']);
+  refreshToken(token: string) {
+    return this.http.post(this.clientUrl + 'auth/refresh', {
+      refreshToken: token
+    }, httpOptions);
   }
+
+  getClientName() {
+    this.tokenStorage.getClient().name;
+  }
+
+
+  // logout() {
+  //   localStorage.removeItem('client');
+  //   this.clientSubject.next(null!);
+  //   this.router.navigate(['']);
+  // }
 }

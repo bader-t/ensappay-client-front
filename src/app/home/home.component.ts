@@ -8,10 +8,10 @@ import { AuthService } from '../auth/services/auth.service';
 })
 export class HomeComponent {
 
-  client: String;
+  client: any;
 
   constructor(private authService: AuthService) {
-    this.client = this.authService.clientValue.name;
+    this.client = this.authService.getClientName;
   }
 
 }

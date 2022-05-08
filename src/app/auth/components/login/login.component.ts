@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { AuthService } from '../../services/auth.service';
+import { TokenStorageService } from '../../services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required),
   });
 
-  constructor(private alertService: AlertService, private authService: AuthService, private router: Router) { }
+  constructor(private alertService: AlertService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -35,11 +36,14 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.f['phoneNumber'].value, this.f['password'].value).subscribe(
       {
-        next: (v: any) => {
-          this.alertService.success(v);
+        next: (data: any) => {
+          this.tokenStorage.saveToken(data.headers.get('access_token'));
+          this.tokenStorage.saveRefreshToken(data.headers.get('refresh_token'));
+          this.tokenStorage.setIsFirstLogin(data.firstlogin);
+          this.tokenStorage.saveClient(data.clientProfile);
         },
         error: (e: any) => {
-          this.alertService.error(e.statusText);
+          this.alertService.error(e.error.message);
         },
         complete: () => {
           this.alertService.success("Succé");
