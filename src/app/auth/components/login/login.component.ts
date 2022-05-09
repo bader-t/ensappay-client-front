@@ -39,8 +39,9 @@ export class LoginComponent implements OnInit {
         next: (data: any) => {
           this.tokenStorage.saveToken(data.headers.get('access_token'));
           this.tokenStorage.saveRefreshToken(data.headers.get('refresh_token'));
-          this.tokenStorage.setIsFirstLogin(data.firstlogin);
-          this.tokenStorage.saveClient(data.clientProfile);
+          this.tokenStorage.setIsFirstLogin(data.body.firstLogin);
+          this.tokenStorage.saveClient(data.body.clientProfile);
+          this.router.navigate(['']);
         },
         error: (e: any) => {
           this.alertService.error(e.error.message);

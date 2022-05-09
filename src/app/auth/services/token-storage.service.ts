@@ -13,7 +13,7 @@ export class TokenStorageService {
 
   public saveToken(token: string): void {
     window.localStorage.removeItem('access_token');
-    window.localStorage.setItem('refresh_token', token);
+    window.localStorage.setItem('access_token', token);
 
     const client = this.getClient();
     if (client.id) {
@@ -23,12 +23,12 @@ export class TokenStorageService {
 
 
   public setIsFirstLogin(isFirstLogin: string): void {
-    window.localStorage.removeItem('firstlogin');
-    window.localStorage.setItem('firstlogin', isFirstLogin);
+    window.localStorage.removeItem('firstLogin');
+    window.localStorage.setItem('firstLogin', isFirstLogin);
   }
 
   public getIsFirstLogin(): boolean | null {
-    return window.localStorage.getItem('firstlogin') === 'true';
+    return window.localStorage.getItem('firstLogin') === 'true';
   }
 
 

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
@@ -23,10 +23,10 @@ export class AuthService {
 
 
   login(phoneNumber: string, password: string): Observable<any> {
-    return this.http.post(this.clientUrl + 'login', {
+    return this.http.post<HttpResponse<any>>(this.clientUrl + 'login', {
       phoneNumber,
       password
-    }, httpOptions);
+    }, { observe: 'response' as 'response' });
   }
 
 
