@@ -4,7 +4,8 @@ import {
   HttpHandler,
   HttpInterceptor,
   HTTP_INTERCEPTORS,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpHeaders
 } from '@angular/common/http';
 import { AuthService } from '../auth/services/auth.service';
 import { TokenStorageService } from '../auth/services/token-storage.service';
@@ -27,9 +28,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(catchError(error => {
       if (error instanceof HttpErrorResponse && !authReq.url.includes('/login') && error.status === 401) {
+        console.log('error401', next);
         return this.handle401Error(authReq, next);
       }
-
       return throwError(() => error);
     }));
   }
@@ -40,16 +41,17 @@ export class AuthInterceptor implements HttpInterceptor {
       this.refreshTokenSubject.next(null);
 
       const token = this.tokenService.getRefreshToken();
+      console.log('refresh', token)
 
       if (token)
-        return this.authService.refreshToken(token).pipe(
+        return this.authService.refreshToken(token, new HttpHeaders({ 'Authorization': 'Bearer ' + token })).pipe(
           switchMap((token: any) => {
             this.isRefreshing = false;
+            const accessToken = token.headers.get('access_token');
+            this.tokenService.saveToken(accessToken);
+            this.refreshTokenSubject.next(accessToken);
 
-            this.tokenService.saveToken(token.accessToken);
-            this.refreshTokenSubject.next(token.accessToken);
-
-            return next.handle(this.addTokenHeader(request, token.accessToken));
+            return next.handle(this.addTokenHeader(request, accessToken));
           }),
           catchError((err) => {
             this.isRefreshing = false;
@@ -68,6 +70,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
+    console.log('first', token)
     return request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
   }
 }

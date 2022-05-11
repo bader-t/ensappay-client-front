@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Client } from 'src/app/shared/models/client.model';
+import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 @Injectable({
   providedIn: 'root'
@@ -39,17 +38,17 @@ export class AuthService {
   }
 
   changePassword(model: any) {
-    return this.http.post(this.clientUrl + "account/client/change-password", model);
+    return this.http.put(this.clientUrl + "account/client/change-password", model, httpOptions);
   }
 
-  refreshToken(token: string) {
+  refreshToken(token: string, headers: HttpHeaders) {
     return this.http.post(this.clientUrl + 'auth/refresh', {
-      refreshToken: token
-    }, httpOptions);
+      refresh_token: token
+    }, { headers: headers });
   }
 
   getClientName() {
-    this.tokenStorage.getClient().name;
+    return this.tokenStorage.getClient().name;
   }
 
 

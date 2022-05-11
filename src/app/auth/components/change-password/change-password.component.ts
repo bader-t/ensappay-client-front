@@ -31,7 +31,7 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
     this.loading = true;
-
+    console.log(typeof (this.changePasswordForm.value));
     this.authService.changePassword(this.changePasswordForm.value).subscribe({
       next: (v: any) => {
         this.alertService.success(v);
