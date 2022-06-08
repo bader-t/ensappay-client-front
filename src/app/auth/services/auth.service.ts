@@ -52,9 +52,5 @@ export class AuthService {
   }
 
 
-  // logout() {
-  //   localStorage.removeItem('client');
-  //   this.clientSubject.next(null!);
-  //   this.router.navigate(['']);
-  // }
+
 }

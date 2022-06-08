@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.f['phoneNumber'].value, this.f['password'].value).subscribe(
       {
         next: (data: any) => {
-          console.log(data.headers.get('access_token'));
           this.tokenStorage.saveToken(data.headers.get('access_token'));
           this.tokenStorage.saveRefreshToken(data.headers.get('refresh_token'));
           this.tokenStorage.setIsFirstLogin(data.body.firstLogin);
