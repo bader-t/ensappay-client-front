@@ -1,0 +1,38 @@
+
+
+
+<div class="container mt-3 pt-3">
+
+    <div class="card col-12 col-sm-10 col-md-11 m-auto">
+        <div class="card-body bg-light">
+            <h4 class="mb-3 my-2">Paiement de facture</h4>
+
+                <nav >
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active text-secondary" id="creditors" data-bs-toggle="tab" data-bs-target="#nav-creditors" type="button"
+                            role="tab" aria-controls="nav-creditors" aria-selected="true">LISTE DES CRÉANCIERS</button>
+
+                        <button class="nav-link text-secondary" id="history" data-bs-toggle="tab" data-bs-target="#nav-history" type="button"
+                            role="tab" aria-controls="nav-history" aria-selected="false">HISTORIQUE</button>
+                    </div>
+                </nav>
+                
+                <div class="tab-content mt-2" id="nav-tabContent">
+
+                    <div class="tab-pane fade show active " id="nav-creditors" role="tabpanel" aria-labelledby="creditors">
+                        <app-creditors></app-creditors>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="nav-history" role="tabpanel" aria-labelledby="history">
+                        <app-history></app-history>
+                    </div>
+                </div>
+        </div>   
+    </div>
+
+   
+    
+</div>
+
+
+
