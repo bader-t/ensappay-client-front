@@ -12,11 +12,11 @@
         <div class="col-md-4 m-auto">
           <img src={{provider.image}} class="img-fluid rounded-start" alt="...">
         </div>
-        <div class="col-md-8 ">
+        <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{provider.name}}</h5>
-            <a routerLink="" class="card-text d-block  link-dark"
-              *ngFor="let product of provider.products"><b>&gt;</b>{{product}}</a>
+            <span class="d-block" *ngFor="let product of provider.products"><b>&gt;</b>{{product}}</span>
+            <a [routerLink]="[provider.category,provider.surname]" class="stretched-link"></a>
           </div>
         </div>
       </div>

@@ -3,4 +3,5 @@ export class Provider {
   name?: string;
   products?: string[];
   category?: string;
+  surname?: string;
 }

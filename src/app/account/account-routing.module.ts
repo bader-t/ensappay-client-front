@@ -3,19 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreditorsComponent } from './components/creditors/creditors.component';
 import { HistoryComponent } from './components/history/history.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { RechargeComponent } from './components/recharge/recharge.component';
 
 const routes: Routes = [
   {
-    path: '', component: InvoiceComponent,
+    path: '', component: LayoutComponent,
     children: [
       {
-        path: '', component: CreditorsComponent,
+        path: '', component: ProfileComponent,
       },
       {
-        path: 'creditors', component: CreditorsComponent,
+        path: 'operations', component: InvoiceComponent,
       },
       {
-        path: 'history', component: HistoryComponent,
+        path: 'operations/recharge/:surname', component: RechargeComponent,
       }
     ]
   }

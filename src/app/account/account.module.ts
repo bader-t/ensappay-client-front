@@ -7,6 +7,8 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { CreditorsComponent } from './components/creditors/creditors.component';
 import { HistoryComponent } from './components/history/history.component';
 import { SharedModule } from '../shared/shared.module';
+import { RechargeComponent } from './components/recharge/recharge.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { SharedModule } from '../shared/shared.module';
     ProfileComponent,
     InvoiceComponent,
     CreditorsComponent,
-    HistoryComponent
+    HistoryComponent,
+    RechargeComponent,
+    LayoutComponent
   ],
   imports: [
     CommonModule,

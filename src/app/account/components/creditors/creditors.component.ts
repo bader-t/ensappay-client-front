@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Provider } from '../../models/provider.model';
 import { ProviderService } from '../../services/provider.service';
@@ -12,7 +13,7 @@ export class CreditorsComponent implements OnInit {
 
   providers: Provider[] = [];
 
-  constructor(private providerService: ProviderService, private alertService: AlertService) { }
+  constructor(private providerService: ProviderService, private alertService: AlertService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -31,5 +32,6 @@ export class CreditorsComponent implements OnInit {
       }
     })
   }
+
 
 }

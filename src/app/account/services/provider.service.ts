@@ -11,6 +11,7 @@ const providerUrl = 'http://localhost:8080/api/providers';
 })
 export class ProviderService {
 
+
   providers: Provider[] = [
     {
       image: "https://halberdbastion.com/sites/default/files/2017-08/Maroc-Telecom-Logo.png",
@@ -18,7 +19,8 @@ export class ProviderService {
       products: [
         "Téléphonie et internet SIM", "Fiber"
       ],
-      category: "recharge"
+      category: "recharge",
+      surname: "iam"
 
     },
     {
@@ -27,7 +29,8 @@ export class ProviderService {
       products: [
         "Téléphonie et internet SIM", "Fiber"
       ],
-      category: "recharge"
+      category: "recharge",
+      surname: "inwi"
     },
     {
       image: "https://www.adipsys.com/wp-content/uploads/2018/11/Logo-Orange-emea.png",
@@ -35,7 +38,8 @@ export class ProviderService {
       products: [
         "Téléphonie et internet SIM", "Fiber"
       ],
-      category: "recharge"
+      category: "recharge",
+      surname: "orange"
     },
   ];
 
@@ -45,6 +49,10 @@ export class ProviderService {
   getAll(): Observable<Provider[]> {
     // return this.http.get<Provider[]>(providerUrl);
     return of(this.providers);
+  }
+
+  findBySurname(surname: String | undefined): Provider | undefined {
+    return this.providers.find(provider => provider.surname == surname);
   }
 
 }
