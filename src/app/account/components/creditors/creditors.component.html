@@ -1,60 +1,30 @@
-
-<select class="form-select my-3" aria-label="Default select example">
-    <option selected>Categories</option>
-    <option value="1">Facture</option>
-    <option value="2">Recharge</option>
-    <option value="3">Donation</option>
+<select class="form-select my-3" aria-label="Categorie">
+  <option selected>Tous les categories</option>
+  <option value="facture">Facture</option>
+  <option value="recharge">Recharge</option>
+  <option value="donation">Donation</option>
 </select>
 
-<div class="row row-cols-1 row-cols-md-2 g-4 ">
+<div class="row row-cols-1 row-cols-md-2 g-3">
+  <div *ngFor="let provider of providers" class="col">
+    <div class="card mb-2 col">
+      <div class="row g-0">
+        <div class="col-md-4 m-auto">
+          <img src={{provider.image}} class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8 ">
+          <div class="card-body">
+            <h5 class="card-title">{{provider.name}}</h5>
+            <p class="card-text"> > Telephone et internet.</p>
+            <p class="card-text"> > Fibre.</p>
+            <a routerLink="" *ngFor="let product of provider.products">{{product}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <div class="col">
-        <div class="card mb-2 col">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src={{MarocTLC_URL}}  class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Maroc Telecome</h5>
-                         <p class="card-text"> > Telephone et internet.</p>
-                        <p class="card-text"> > Fibre.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card mb-2 col">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src={{Inwi_URL}} height="100px" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">INWI</h5>
-                        <p class="card-text">> Telephone et internet.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card mb-2 col">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img  src={{Orange_URL}} height="100px" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Orange</h5>
-                        <p class="card-text">> Fibre.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+
 
 
 

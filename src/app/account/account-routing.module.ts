@@ -6,16 +6,16 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 
 const routes: Routes = [
   {
-    path :'', component:InvoiceComponent,
-    children:[
+    path: '', component: InvoiceComponent,
+    children: [
       {
-        path:'creditors', component:CreditorsComponent,
+        path: '', component: CreditorsComponent,
       },
       {
-        path:'', component:CreditorsComponent,
+        path: 'creditors', component: CreditorsComponent,
       },
       {
-        path:'history', component:HistoryComponent,
+        path: 'history', component: HistoryComponent,
       }
     ]
   }
