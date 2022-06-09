@@ -1,11 +1,6 @@
-a:hover{
-    border: 1px solid #33b9f6;
-    width:250px;
-    height: 220px;
-
+.home .card {
+  border: none;
 }
-a{
-    width:250px;
-    height: 220px;
-
+.home .card:hover {
+  border: 1px solid #33b9f6;
 }

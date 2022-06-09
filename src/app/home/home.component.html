@@ -1,77 +1,60 @@
-<html lang="en">
-
-<body>
-
-  <!-- Main navigation -->
-  <header>
-
-    <!-- Full Page Intro -->
-    <div class="view"
-      style="background-image: url('https://images.pexels.com/photos/4482896/pexels-photo-4482896.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-repeat: no-repeat; background-size: cover; background-position: center center; height:520px">
-      <!-- Mask & flexbox options-->
-      <div class="mask rgba-gradient align-items-center">
-        <!-- Content -->
-        <div class="container">
-          <!--Grid row-->
-          <div class="row">
-            <!--Grid column-->
-            <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft" data-wow-delay="0.3s">
-              <div class="container ">
-                <h1>Salut {{client}}!</h1>
-
-              </div>
-              <hr class="hr-light">
-              <h3>Vous êtes authentifier à e-banking!!</h3>
-          
+<header>
+  <div class="view"
+    style="background-image: url('https://images.pexels.com/photos/4482896/pexels-photo-4482896.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-repeat: no-repeat; background-size: cover; background-position: center center; height:520px">
+    <div class="mask rgba-gradient align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft" data-wow-delay="0.3s">
+            <div class="container ">
+              <h1>Salut {{client}}!</h1>
             </div>
-
+            <hr class="hr-light">
+            <h3>Vous êtes authentifier à e-banking!!</h3>
           </div>
-          <!--Grid row-->
         </div>
-        <!-- Content -->
       </div>
-      <!-- Mask & flexbox options-->
     </div>
-    <!-- Full Page Intro -->
-  </header>
-  <!-- Main navigation -->
+  </div>
+</header>
 
-  <!--Main Layout-->
-  <main>
-    <div class="container">
-      <!--Grid row-->
-      <div class="row pt-3">
-        <!--Grid column-->
-        <div style=" display: flex; align-items:center; justify-content: center;">
-          <a class="btn btn-white" style=" display: flex; flex-direction: column;align-items:center; justify-content: center; margin:0px 40px">
-            <img style="width: 80px; margin-bottom:5px; " src="./../../assets/images/piggy-bank.png" /> <br />
+<main>
+  <div class="container home">
+    <div class="row row-cols-1 row-cols-md-3 g-4 pt-5">
+      <div class="col mb-4">
+        <div class="card pt-3 px-2 text-center h-100">
 
-            <h4>Opérations</h4>
-            <p>Payer vos factures online<br>et effectuer d'autre operations</p>
-          </a>
-
-          <a class="btn btn-white" style=" display: flex; flex-direction: column; align-items:center; justify-content: center;margin:0px 40px">
-            <img style="width: 80px; margin-bottom:5px; " src="./../../assets/images/checked.png" /> <br />
-          
-            <h4>Actualités</h4>
-            <p>Les nouveaux offres spéciale</p>
-          </a>
-
-          <a class="btn btn-white" style=" display: flex; flex-direction: column;align-items:center; justify-content: center; margin:0px 40px">
-            <img style="width: 80px; margin-bottom:5px; " src="./../../assets/images/briefcase.png" /> <br />
-          
-            <h4>Mon Compte</h4>
-            <p>Tous les information lié a <br>votre compte</p>
-          </a>
+          <img src="./../../assets/images/piggy-bank.png" style="width: 5rem;" class="card-img-top m-auto" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Opérations</h5>
+            <p class="card-text">Payer vos factures en ligne et effectuer d'autre opérations</p>
+          </div>
 
         </div>
-        <!--Grid column-->
       </div>
-      <!--Grid row-->
+
+      <div class="col mb-4">
+        <div class="card pt-3 px-2 text-center h-100 ">
+
+          <img src="./../../assets/images/checked.png" style="width: 5rem;" class="card-img-top m-auto" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Actualités</h5>
+            <p class="card-text">Trouver les nouvelles et spéciales offres </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col mb-4">
+        <div class="card pt-3 px-2 text-center h-100">
+
+          <img src="./../../assets/images/briefcase.png" style="width: 5rem;" class="card-img-top m-auto" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Mon Compte</h5>
+            <p class="card-text">Accéder à tous les informations liées à votre compte</p>
+          </div>
+
+        </div>
+      </div>
     </div>
-  </main>
-  <!--Main Layout-->
-
-</body>
-
-</html>
+  </div>
+</main>
