@@ -16,7 +16,7 @@ export class ProviderService {
       image: "https://halberdbastion.com/sites/default/files/2017-08/Maroc-Telecom-Logo.png",
       name: "Maroc Télécome",
       products: [
-        "", ""
+        "Téléphonie et internet SIM", "Fiber"
       ],
       category: "recharge"
 
@@ -25,7 +25,7 @@ export class ProviderService {
       image: "https://www.marocemploi.cc/storage/files/ma/68/thumb-816x460-369c557388a7b34f87e6ae42fe50d9d6.jpg",
       name: "Inwi",
       products: [
-        "", ""
+        "Téléphonie et internet SIM", "Fiber"
       ],
       category: "recharge"
     },
@@ -33,7 +33,7 @@ export class ProviderService {
       image: "https://www.adipsys.com/wp-content/uploads/2018/11/Logo-Orange-emea.png",
       name: "Orange",
       products: [
-        "", ""
+        "Téléphonie et internet SIM", "Fiber"
       ],
       category: "recharge"
     },

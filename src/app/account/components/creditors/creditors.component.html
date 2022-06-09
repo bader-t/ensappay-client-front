@@ -15,9 +15,8 @@
         <div class="col-md-8 ">
           <div class="card-body">
             <h5 class="card-title">{{provider.name}}</h5>
-            <p class="card-text"> > Telephone et internet.</p>
-            <p class="card-text"> > Fibre.</p>
-            <a routerLink="" *ngFor="let product of provider.products">{{product}}</a>
+            <a routerLink="" class="card-text d-block  link-dark"
+              *ngFor="let product of provider.products"><b>&gt;</b>{{product}}</a>
           </div>
         </div>
       </div>
