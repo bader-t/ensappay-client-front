@@ -1,0 +1,6 @@
+.home .card {
+  border: none;
+}
+.home .card:hover {
+  border: 1px solid #33b9f6;
+}

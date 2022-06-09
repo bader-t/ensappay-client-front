@@ -10,6 +10,7 @@ export class HomeComponent {
 
   client: string;
 
+  
   constructor(private authService: AuthService) {
     this.client = this.authService.getClientName();
   }
