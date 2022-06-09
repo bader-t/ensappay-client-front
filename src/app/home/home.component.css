@@ -4,3 +4,7 @@
 .home .card:hover {
   border: 1px solid #33b9f6;
 }
+
+.home {
+  position: relative;
+}

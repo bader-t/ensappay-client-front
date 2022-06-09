@@ -1,6 +1,6 @@
 <header>
   <div class="view"
-    style="background-image: url('https://images.pexels.com/photos/4482896/pexels-photo-4482896.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-repeat: no-repeat; background-size: cover; background-position: center center; height:520px">
+    style="background-image: url('https://images.pexels.com/photos/4482896/pexels-photo-4482896.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-repeat: no-repeat; background-size: cover; background-position: center center; height:500px">
     <div class="mask rgba-gradient align-items-center">
       <div class="container">
         <div class="row">
@@ -17,18 +17,18 @@
   </div>
 </header>
 
-<main>
-  <div class="container home">
+<main class="home">
+  <div class="container  ">
     <div class="row row-cols-1 row-cols-md-3 g-4 pt-5">
       <div class="col mb-4">
-        <div class="card pt-3 px-2 text-center h-100">
+        <div class="card pt-3 pb-2 px-2 text-center h-100">
 
           <img src="./../../assets/images/piggy-bank.png" style="width: 5rem;" class="card-img-top m-auto" alt="...">
           <div class="card-body">
             <h5 class="card-title">Opérations</h5>
             <p class="card-text">Payer vos factures en ligne et effectuer d'autre opérations</p>
           </div>
-
+          <a [routerLink]="['/account/operations']" class="stretched-link"></a>
         </div>
       </div>
 
@@ -39,6 +39,7 @@
           <div class="card-body">
             <h5 class="card-title">Actualités</h5>
             <p class="card-text">Trouver les nouvelles et spéciales offres </p>
+
           </div>
 
         </div>
@@ -51,6 +52,7 @@
           <div class="card-body">
             <h5 class="card-title">Mon Compte</h5>
             <p class="card-text">Accéder à tous les informations liées à votre compte</p>
+            <a [routerLink]="['/account']" class="stretched-link"></a>
           </div>
 
         </div>
