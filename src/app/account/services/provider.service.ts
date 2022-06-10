@@ -55,4 +55,11 @@ export class ProviderService {
     return this.providers.find(provider => provider.surname == surname);
   }
 
+  public recharge(recharge: any) {
+    // return this.http.post(providerUrl + 'recharge', recharge);
+    return of(true);
+  }
+
+
+
 }
