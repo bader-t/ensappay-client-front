@@ -8,3 +8,16 @@
 .home {
   position: relative;
 }
+
+h1{
+  color:white;
+  padding-top:25px;
+  font-size: 55px;
+  font-weight: 700;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+}
+
+.view{
+ 
+}
