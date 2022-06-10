@@ -1,0 +1,14 @@
+.navbar-brand  {
+    font-weight: 600;
+    color:#33b9f6;
+}
+
+.nav-item {
+    font-weight: 500;
+    color:#33b9f6;
+}
+
+.navContainer{
+    background-color: #fff;    
+    padding : 10px 20px;
+}
