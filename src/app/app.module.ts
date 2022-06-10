@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     SharedModule,
     AuthModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
