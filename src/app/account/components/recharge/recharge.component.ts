@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Provider } from '../../models/provider.model';
 import { ProviderService } from '../../services/provider.service';
-import { ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap'
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-recharge',
@@ -18,29 +19,18 @@ export class RechargeComponent implements OnInit {
   phone?: String;
   type?: String;
   amount?: String;
-  date?:String;
+  date?: String;
 
-  
+  loading = false;
+  submitted = false;
 
+  closeResult?: String;
 
-  setPhone(value:any) {
-    console.log(value);
-    this.phone = value;
-  }
-  setType(value:any) {
-    this.type = value;
-  }
-  setAmount(value:any) {
-    this.amount = value;
-  }
-
-
-  closeResult?:String;
-  constructor( private router: Router, 
-               private route: ActivatedRoute, 
-               private providerService: ProviderService, 
-               private alertService: AlertService,
-               private modalService : NgbModal) { }
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private providerService: ProviderService,
+    private alertService: AlertService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.surname = this.route.snapshot.params['surname'];
@@ -51,35 +41,63 @@ export class RechargeComponent implements OnInit {
     }
   }
 
-  open(content:any) {
-    const now = new Date();
+  rechargeForm = new FormGroup({
+    phone: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
+    type: new FormControl('', Validators.required),
+    amount: new FormControl('', Validators.required),
+  });
 
-    //passing data to local variables
-    this.date = now.toLocaleDateString()
-    this.phone = (document.getElementById("phone") as HTMLInputElement).value; 
-    this.type = (document.getElementById("type") as HTMLInputElement).value; 
-    this.amount = (document.getElementById("amount") as HTMLInputElement).value; 
-    
-    if(this.phone.match(/^[0-9]+$/) && this.phone.length == 10){
-      // open the Modal popup
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }else{
-      console.log("Error phone number is incorrecte")
-    }
-}
 
-private getDismissReason(reason: any): string {
-  if (reason === ModalDismissReasons.ESC) {
-    return 'by pressing ESC';
-  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-    return 'by clicking on a backdrop';
-  } else {
-    return `with: ${reason}`;
+  get f() { return this.rechargeForm.controls; }
+
+  onSubmit() {
+
+    this.providerService.recharge(this.rechargeForm.value).subscribe(
+      {
+        next: (v: any) => {
+          this.loading = false;
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+          this.loading = false;
+        },
+        complete: () => {
+          this.modalService.dismissAll();
+          this.alertService.success("Operation effectuée avec succé");
+        }
+      }
+    );
+
+
   }
-}
+
+  openDialog(content: any) {
+    this.submitted = true;
+    this.alertService.clear();
+    if (this.rechargeForm.invalid) {
+      return;
+    }
+    this.date = (new Date()).toLocaleDateString();
+    this.phone = this.f['phone'].value;
+    this.type = this.f['type'].value;
+    this.amount = this.f['amount'].value;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
 
 }

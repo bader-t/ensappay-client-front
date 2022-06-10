@@ -4,55 +4,70 @@
     <div class="card-body bg-light">
       <h4 class="mb-3 my-2">Recharger votre téléphone</h4>
       <hr />
-      <div class="row bg-light">
+      <form [formGroup]="rechargeForm" (ngSubmit)="openDialog(content)" class="bg-white p-3">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="{{provider?.image}}" style="height:150px;" class="mx-auto d-block" alt="">
+            <h4 class="text-center">{{provider?.name}}</h4>
+          </div>
 
-        <div class="col-md-4" style="display: flex; flex-direction: column;">
-          <img src="{{provider?.image}}" style="height:150px;  align-self: center;" alt="">
-          <h4 style=" align-self: center;">{{provider?.name}}</h4>
-        </div>
-
-        <div class="col-md-8">
-          
+          <div class="col-md-8">
             <legend>Remplir les champs suivants :</legend>
-
             <div class="mb-3">
-              <input  
-              onlyNumbers
-              type="phone" 
-              name="phone"
-              id="phone" 
-              class="form-control" 
-              (ngModelChange)="setPhone($event)"
-              placeholder="Numero du telephone..">
+              <input type="tel" formControlName="phone" class="form-control" placeholder="Numéro du téléphone.."
+                [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
+              <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+                <div *ngIf="f['phone'].errors['required']">Entrer un numéro du téléphone</div>
+                <div *ngIf="f['phone'].errors['pattern']">Entrer un numéro du téléphone valide</div>
+              </div>
             </div>
 
             <div class="mb-3">
-              <select id="type" class="form-select"  (ngModelChange)="setType($event)">
-                <option>NORMALE</option>
-                <option>SMS *1</option>
-                <option>TOUT COMPRIS *2</option>
-                <option>INTERNET *3</option>
-                <option>RESEAUX SOCIAUX *6</option>
+              <select formControlName="type" class="form-select"
+                [ngClass]="{ 'is-invalid': submitted && f['type'].errors }">
+
+                <option value="" disabled>Choisir le type</option>
+                <option [defaultSelected]="true" [ngValue]="'NORMALE'" [selected]="true">NORMALE</option>
+                <option [ngValue]="'SMS *1'">SMS *1</option>
+                <option [ngValue]="'TOUT COMPRIS *2'">TOUT COMPRIS *2</option>
+                <option [ngValue]="'INTERNET *3'">INTERNET *3</option>
+                <option [ngValue]="'RESEAUX SOCIAUX *6'">RESEAUX SOCIAUX *6</option>
               </select>
+              <div *ngIf="submitted && f['type'].errors" class="invalid-feedback">
+                <div *ngIf="f['type'].errors['required']">Choisir le type</div>
+              </div>
             </div>
 
             <div class="mb-3">
-              <select id="amount" class="form-select" (ngModelChange)="setAmount($event)">
-                <option>10</option>
-                <option>20</option>
-                <option>25</option>
-                <option>30</option>
-                <option>50</option>
-                <option>100</option>
-                <option>200</option>
-                <option>300</option>
+              <select formControlName="amount" class="form-select"
+                [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }">
+
+                <option value="" disabled>Choisir le montant</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="30">30</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+                <option [ngValue]="200">200</option>
+                <option [ngValue]="300">300</option>
               </select>
+              <div *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
+                <div *ngIf="f['amount'].errors['required']">Choisir le montant</div>
+              </div>
             </div>
-          
-          <button class="btn btn-primary" (click)="open(content)">Suivant</button>
+
+            <div class="form-group d-flex justify-content-end mt-3">
+              <button [disabled]="loading" class="btn btn-primary ms-2">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Suivant
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
+
   </div>
 
 
@@ -82,13 +97,13 @@
             <td class="title">La date :</td>
             <td>{{date}}</td>
           </tr>
-          
-          
+
+
         </tbody>
       </table>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Valider</button>
+      <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Valider</button>
     </div>
   </ng-template>
