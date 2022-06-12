@@ -13,6 +13,7 @@ import { DonationComponent } from './components/donation/donation.component';
 import { FactureComponent } from './components/facture/facture.component';
 
 
+
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -30,6 +31,6 @@ import { FactureComponent } from './components/facture/facture.component';
     SharedModule
   ]
 })
-export class AccountModule { 
+export class AccountModule {
 
 }

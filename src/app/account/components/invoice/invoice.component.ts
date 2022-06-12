@@ -11,7 +11,8 @@ export class InvoiceComponent implements OnInit {
   constructor(private providerService: ProviderService) { }
 
   ngOnInit(): void {
-    this.providerService.getCreditors();
+    this.providerService.getAll();
+
   }
 
 
