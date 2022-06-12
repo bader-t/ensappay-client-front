@@ -14,7 +14,7 @@
           <div class="col-md-8">
             <legend>Remplir les champs suivants :</legend>
             <div class="mb-3">
-              <input type="tel" formControlName="phone" class="form-control" placeholder="Numéro du téléphone.."
+              <input type="tel" name="phone" formControlName="phone" class="form-control" placeholder="Numéro du téléphone.."
                 [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
               <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
                 <div *ngIf="f['phone'].errors['required']">Entrer un numéro du téléphone</div>
@@ -74,8 +74,8 @@
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Récapitulation</h4>
-      <button type="button" class="close " aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" class="btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')">
+        
       </button>
     </div>
     <div class="modal-body">

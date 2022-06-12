@@ -27,7 +27,7 @@ export class ProviderService {
       products: [
         "Téléphonie et internet SIM", "Fiber"
       ],
-      category: "recharge",
+      category: "donation",
       surname: "inwi"
     },
     {
