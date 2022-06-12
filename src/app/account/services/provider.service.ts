@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Provider, RechargeType } from '../models/provider.model';
+
 const providerUrl = 'http://localhost:8080/api/providers';
 
 @Injectable({
@@ -10,6 +11,8 @@ const providerUrl = 'http://localhost:8080/api/providers';
 export class ProviderService {
 
   providers: Provider[] = [];
+
+
 
 
   constructor(private http: HttpClient) { }
@@ -81,11 +84,12 @@ export class ProviderService {
               this.providers.push(provider);
             }
 
+
           }
         }
       }
     }
-    console.log('this.providers', this.providers)
+
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.send(sr);
   }

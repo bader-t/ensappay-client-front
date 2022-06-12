@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreditorsComponent } from './components/creditors/creditors.component';
 import { DonationComponent } from './components/donation/donation.component';
-import { HistoryComponent } from './components/history/history.component';
+import { FactureComponent } from './components/facture/facture.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -23,6 +22,10 @@ const routes: Routes = [
       },
       {
         path: 'operations/donation/:surname', component: DonationComponent,
+
+      },
+      {
+        path: 'operations/facture/:surname', component: FactureComponent,
       }
     ]
   }

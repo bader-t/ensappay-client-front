@@ -12,6 +12,7 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.providerService.getAll();
+
   }
 
 

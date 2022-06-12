@@ -24,6 +24,7 @@ export class Provider {
   }
 }
 export class RechargeType {
+
   code?: number;
   name?: string;
 

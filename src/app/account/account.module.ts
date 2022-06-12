@@ -10,6 +10,8 @@ import { SharedModule } from '../shared/shared.module';
 import { RechargeComponent } from './components/recharge/recharge.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DonationComponent } from './components/donation/donation.component';
+import { FactureComponent } from './components/facture/facture.component';
+
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { DonationComponent } from './components/donation/donation.component';
     HistoryComponent,
     RechargeComponent,
     LayoutComponent,
-    DonationComponent
+    DonationComponent,
+    FactureComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,6 @@ import { DonationComponent } from './components/donation/donation.component';
     SharedModule
   ]
 })
-export class AccountModule { 
+export class AccountModule {
 
 }
