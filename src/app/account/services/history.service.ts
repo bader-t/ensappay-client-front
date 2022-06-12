@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Creance } from '../models/creance.model';
 import { History } from '../models/history.model';
 
 const historyUrl = 'http://localhost:8080/api/providers';
@@ -9,48 +10,58 @@ const historyUrl = 'http://localhost:8080/api/providers';
 })
 export class HistoryService {
 
-  histories: History[] = [
+  histories: Creance[] = [
     {
-      image: "https://halberdbastion.com/sites/default/files/2017-08/Maroc-Telecom-Logo.png",
-      provider: "Maroc Télécome",
-      title: "Téléphonie et internet SIM",
-      category: "recharge",
-      amount: 249,
-      date: "12-01-2022",
-      contractNumber: "0624916360",
-      ref: "14948467"
+        code: 12 ,
 
-    },
-    {
-      image: "https://halberdbastion.com/sites/default/files/2017-08/Maroc-Telecom-Logo.png",
-      provider: "Maroc Télécome",
-      title: "Téléphonie et internet SIM",
-      category: "recharge",
-      amount: 249,
-      date: "12-01-2022",
-      contractNumber: "0624916360",
-      ref: "14865467"
+        dueDate: "12-11-2020",
 
+        amount:245.99,
+
+        creanceStatus: "UNPAID",
+
+        serviceProvider: {
+          name: "Orange",
+          code : 3,
+          image: "",
+        },
+
+        creancier:"electricite"
     },
     {
-      image: "https://www.marocemploi.cc/storage/files/ma/68/thumb-816x460-369c557388a7b34f87e6ae42fe50d9d6.jpg",
-      provider: "Inwi",
-      title: "Téléphonie et internet SIM",
-      category: "recharge",
-      amount: 50,
-      date: "12-01-2022",
-      contractNumber: "0624916360",
-      ref: "14522467"
+        code: 11 ,
+
+        dueDate: "12-05-2020",
+
+        amount:178.24,
+
+        creanceStatus: "UNPAID",
+
+        serviceProvider: {
+          name: "Orange",
+          code : 3,
+          image: "",
+        },
+
+        creancier:"fibre"
     },
     {
-      image: "https://www.adipsys.com/wp-content/uploads/2018/11/Logo-Orange-emea.png",
-      provider: "Orange",
-      title: "Téléphonie et internet SIM",
-      category: "recharge",
-      amount: 179,
-      date: "12-01-2022",
-      contractNumber: "0624916360",
-      ref: "14565467"
+        code: 10,
+
+        dueDate: "12-35-2553",
+
+        amount:245.99,
+
+        creanceStatus: "COMPLETED",
+
+         serviceProvider: {
+          name: "Inwi",
+          code : 2,
+          image: "https://www.bitrefill.com/content/cn/b_rgb%3AFFFFFF%2Cc_pad%2Ch_800%2Cw_800/v1558461784/inwi.jpg",
+        },
+
+
+        creancier:"Abonnement"
     },
   ];
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Creance } from '../../models/creance.model';
 import { History } from '../../models/history.model';
 import { HistoryService } from '../../services/history.service';
 
@@ -12,7 +13,7 @@ import { HistoryService } from '../../services/history.service';
 export class HistoryComponent implements OnInit {
 
 
-  histories: History[] = [];
+  histories: Creance[] = [];
 
 
   MarocTLC_URL: string = "https://halberdbastion.com/sites/default/files/2017-08/Maroc-Telecom-Logo.png";
@@ -30,7 +31,15 @@ export class HistoryComponent implements OnInit {
   getAllHistories(): void {
     this.historyService.getAll().subscribe({
       next: (data: any) => {
-        this.histories = data;
+        console.log(data);
+
+        data.map((val: any)=>{
+          console.log(val);
+          if(val.creanceStatus=="COMPLETED"){
+            this.histories.push(val);
+          }
+        });
+        
       },
       error: (e: any) => {
         this.alertService.error(e.error.message);

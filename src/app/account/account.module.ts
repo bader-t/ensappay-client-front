@@ -9,6 +9,8 @@ import { HistoryComponent } from './components/history/history.component';
 import { SharedModule } from '../shared/shared.module';
 import { RechargeComponent } from './components/recharge/recharge.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { DonationComponent } from './components/donation/donation.component';
+import { FactureComponent } from './components/facture/facture.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { LayoutComponent } from './components/layout/layout.component';
     CreditorsComponent,
     HistoryComponent,
     RechargeComponent,
-    LayoutComponent
+    LayoutComponent,
+    DonationComponent,
+    FactureComponent
   ],
   imports: [
     CommonModule,

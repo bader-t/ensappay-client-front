@@ -1,14 +1,14 @@
 <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
 
   <div class="accordion-item mb-2" *ngFor="let history of histories">
-    <h2 class="accordion-header" [id]="[history.ref]">
+    <h2 class="accordion-header" [id]="[history.code]">
       <button class="accordion-button collapsed text-secondary" type="button" data-bs-toggle="collapse"
-        [attr.data-bs-target]="'#t'+history.ref" aria-expanded="false" [attr.aria-controls]="'t'+history.ref!">
+        [attr.data-bs-target]="'#t'+history.code" aria-expanded="false" [attr.aria-controls]="'t'+history.code!">
         <div class="d-flex w-100 align-items-center justify-content-between me-5">
           <div>
-            <img src={{history.image}} height="70px" class="rounded-start" alt="...">
-            &nbsp; <b> {{history.provider}} </b> &nbsp;
-            <span> ({{history.date}}) </span>
+            <img src={{history.serviceProvider?.image}} height="70px" class="rounded-start" alt="...">
+            &nbsp; <b> {{history.serviceProvider?.name}} </b> &nbsp;
+            <span> ({{history.dueDate}}) </span>
           </div>
           <div>
             <b>{{history.amount}} dh</b>
@@ -16,9 +16,9 @@
         </div>
       </button>
     </h2>
-    <div [id]="'t'+history.ref!" class="accordion-collapse collapse " attr.aria-labelledby="{{history.ref}}">
+    <div [id]="'t'+history.code!" class="accordion-collapse collapse " attr.aria-labelledby="{{history.code}}">
       <div class="accordion-body">
-        Ref : {{history.ref}}
+        Ref : {{history.code}}
       </div>
     </div>
   </div>

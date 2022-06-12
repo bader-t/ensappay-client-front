@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProviderService } from '../../services/provider.service';
 
 @Component({
   selector: 'app-invoice',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InvoiceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private providerService: ProviderService) { }
 
   ngOnInit(): void {
+    this.providerService.getCreditors();
   }
 
+
 }
+
+
