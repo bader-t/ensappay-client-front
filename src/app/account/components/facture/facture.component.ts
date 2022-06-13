@@ -5,6 +5,7 @@ import { TokenStorageService } from 'src/app/auth/services/token-storage.service
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Creance } from '../../models/creance.model';
 import { Provider } from '../../models/provider.model';
+import { HistoryService } from '../../services/history.service';
 import { ProviderService } from '../../services/provider.service';
 
 @Component({
@@ -14,57 +15,7 @@ import { ProviderService } from '../../services/provider.service';
 })
 export class FactureComponent implements OnInit {
 
-  creances: Creance[] = [
-    {
-        code: 12 ,
-
-        dueDate: "12-11-2020",
-
-        amount:245.99,
-
-        creanceStatus: "UNPAID",
-
-        serviceProvider: {
-          name: "Orange",
-          code : 3,
-        },
-
-        creancier:"electricite"
-    },
-    {
-        code: 11 ,
-
-        dueDate: "12-05-2020",
-
-        amount:178.24,
-
-        creanceStatus: "UNPAID",
-
-        serviceProvider: {
-          name: "Orange",
-          code : 3,
-        },
-
-        creancier:"fibre"
-    },
-    {
-        code: 10,
-
-        dueDate: "12-35-2553",
-
-        amount:245.99,
-
-        creanceStatus: "COMPLETE",
-
-         serviceProvider: {
-          name: "Inwi",
-          code : 2,
-        },
-
-
-        creancier:"Abonnement"
-    },
-  ];
+  creances: Creance[] = [];
 
   creanceAppartient : Creance[] = [];
 
@@ -85,12 +36,14 @@ export class FactureComponent implements OnInit {
 
   closeResult?: String;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private providerService: ProviderService,
     private authStorageService: TokenStorageService,
     private alertService: AlertService,
-    private modalService: NgbModal) { 
+    private modalService: NgbModal,
+    private historyService: HistoryService) { 
 
       //get client data from the auth service 
         this.client = this.authStorageService.getClient();
@@ -100,18 +53,22 @@ export class FactureComponent implements OnInit {
 
   ngOnInit(): void {
 
+    //get all the creances UNPAID
+    this.getAllCreances();
+
     this.surname = this.route.snapshot.params['surname'];
     this.provider = this.providerService.findBySurname(this.surname);
 
-    this.provider?.code!=3;
 
-    console.log("provider code",this.provider?.code!);
-
+    // added only the creances unpaid of the current provider service to creanAppartien List:
     this.creances.map((val)=>{
+
       console.log("val code",val.serviceProvider?.code!);
-      if(val.creanceStatus=="UNPAID" && val.serviceProvider?.code==this.provider?.code){
+
+      if(val.serviceProvider?.code==this.provider?.code){
         this.creanceAppartient.push(val);
       }
+
     });
 
     if (!this.provider) {
@@ -119,6 +76,25 @@ export class FactureComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     }
 
+  }
+   getAllCreances(): void {
+    this.historyService.getAll("UNPAID").subscribe({
+      next: (data: any) => {
+        console.log(data);
+
+        data.map((val: any)=>{
+          console.log(val);
+            this.creances.push(val);
+          
+        });
+        
+      },
+      error: (e: any) => {
+        this.alertService.error(e.error.message);
+      },
+      complete: () => {
+      }
+    })
   }
 
   onSubmit(){
