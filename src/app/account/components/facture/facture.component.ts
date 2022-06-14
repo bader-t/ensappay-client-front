@@ -5,7 +5,6 @@ import { TokenStorageService } from 'src/app/auth/services/token-storage.service
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Creance } from '../../models/creance.model';
 import { Provider } from '../../models/provider.model';
-import { HistoryService } from '../../services/history.service';
 import { ProviderService } from '../../services/provider.service';
 
 @Component({
@@ -17,59 +16,44 @@ export class FactureComponent implements OnInit {
 
   creances: Creance[] = [];
 
-  creanceAppartient : Creance[] = [];
+  creanceAppartient: Creance[] = [];
 
-  creanceSelected : Creance[] = [];
+  creanceSelected: Creance[] = [];
 
   provider?: Provider;
-  surname?: String;
+  surname?: string;
 
   client: any;
-  // static min(min: number): ValidatorFn;
 
-  nom?: String;
+  nom?: string;
   total?: number = 0.00;
-  date?: String;
+  date?: string;
 
   loading = false;
   submitted = false;
 
-  closeResult?: String;
+  closeResult?: string;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private providerService: ProviderService,
-    private authStorageService: TokenStorageService,
+    private tokenStorageService: TokenStorageService,
     private alertService: AlertService,
-    private modalService: NgbModal,
-    private historyService: HistoryService) { 
+    private modalService: NgbModal) {
 
-      //get client data from the auth service 
-        this.client = this.authStorageService.getClient();
-        this.nom = this.client.name + " " +this.client.surname;
+    this.client = this.tokenStorageService.getClient();
+    this.nom = this.client.name + " " + this.client.surname;
 
-    }
+  }
 
   ngOnInit(): void {
-
-    //get all the creances UNPAID
-    this.getAllCreances();
-
+    this.creances = [];
     this.surname = this.route.snapshot.params['surname'];
-    this.provider = this.providerService.findBySurname(this.surname);
+    this.provider = this.providerService.findBySurname(this.surname!, "facture");
+    this.getAllCreances(this.provider?.code!);
 
 
-    // added only the creances unpaid of the current provider service to creanAppartien List:
-    this.creances.map((val)=>{
-
-      console.log("val code",val.serviceProvider?.code!);
-
-      if(val.serviceProvider?.code==this.provider?.code){
-        this.creanceAppartient.push(val);
-      }
-
-    });
 
     if (!this.provider) {
       this.alertService.warn("Not Found", { keepAfterRouteChange: true });
@@ -77,17 +61,10 @@ export class FactureComponent implements OnInit {
     }
 
   }
-   getAllCreances(): void {
-    this.historyService.getAll("UNPAID").subscribe({
+  getAllCreances(code: number): void {
+    this.providerService.getFactures(code).subscribe({
       next: (data: any) => {
-        console.log(data);
-
-        data.map((val: any)=>{
-          console.log(val);
-            this.creances.push(val);
-          
-        });
-        
+        this.creances = data;
       },
       error: (e: any) => {
         this.alertService.error(e.error.message);
@@ -97,48 +74,48 @@ export class FactureComponent implements OnInit {
     })
   }
 
-  onSubmit(){
-    this.creanceSelected=[];
+  onSubmit() {
+    this.creanceSelected = [];
 
-    this.creanceAppartient.map((val)=>{
-     
-        if(val.selected){
-            this.creanceSelected?.push(val);
-          
-        }else{
-           
-        }
-      } 
+    this.creances.map((val) => {
+
+      if (val.selected) {
+        this.creanceSelected?.push(val);
+
+      } else {
+
+      }
+    }
     );
     console.log(this.creanceSelected);
 
   }
 
-  onChange(code:any){
-   
-    this.creanceAppartient.map((val)=>{
+  onChange(code: any) {
 
-      if(val.code==code){
+    this.creances.map((val) => {
+
+      if (val.code == code) {
         val.selected = !val.selected;
         console.log(val.amount);
 
-        if(val.selected){
-          this.total= this.total! + val.amount!;
-          console.log("new total",this.total);
-        }else{
-          this.total= this.total! - val.amount!;
-          console.log("new total",this.total);
+        if (val.selected) {
+          this.total = this.total! + val.amount!;
+          console.log("new total", this.total);
+        } else {
+          this.total = this.total! - val.amount!;
+          console.log("new total", this.total);
         }
       }
-    } );
+    });
   }
 
   openDialog(content: any) {
     this.submitted = true;
     this.alertService.clear();
-   
+
     this.date = (new Date()).toLocaleDateString();
-   
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

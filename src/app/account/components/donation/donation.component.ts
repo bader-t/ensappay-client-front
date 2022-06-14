@@ -15,36 +15,36 @@ import { ProviderService } from '../../services/provider.service';
 export class DonationComponent implements OnInit {
 
   provider?: Provider;
-  surname?: String;
+  surname?: string;
 
   client: any;
   // static min(min: number): ValidatorFn;
 
-  nom?: String;
-  amount?: String;
-  date?: String;
+  nom?: string;
+  amount?: string;
+  date?: string;
 
   loading = false;
   submitted = false;
 
-  closeResult?: String;
+  closeResult?: string;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private providerService: ProviderService,
     private authStorageService: TokenStorageService,
     private alertService: AlertService,
-    private modalService: NgbModal) { 
+    private modalService: NgbModal) {
 
-      //get client data from the auth service 
-        this.client = this.authStorageService.getClient();
-        this.nom = this.client.name + " " +this.client.surname;
+    //get client data from the auth service
+    this.client = this.authStorageService.getClient();
+    this.nom = this.client.name + " " + this.client.surname;
 
-    }
+  }
 
   ngOnInit(): void {
     this.surname = this.route.snapshot.params['surname'];
-    this.provider = this.providerService.findBySurname(this.surname);
+    this.provider = this.providerService.findBySurname(this.surname!, "donation");
     if (!this.provider) {
       this.alertService.warn("Not Found", { keepAfterRouteChange: true });
       this.router.navigate(['../../'], { relativeTo: this.route });

@@ -14,17 +14,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RechargeComponent implements OnInit {
 
   provider?: Provider;
-  surname?: String;
+  surname?: string;
 
-  phone?: String;
-  type?: String;
-  amount?: String;
-  date?: String;
+  phone?: string;
+  type?: string;
+  amount?: string;
+  date?: string;
 
   loading = false;
   submitted = false;
 
-  closeResult?: String;
+  closeResult?: string;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -34,7 +34,7 @@ export class RechargeComponent implements OnInit {
 
   ngOnInit(): void {
     this.surname = this.route.snapshot.params['surname'];
-    this.provider = this.providerService.findBySurname(this.surname);
+    this.provider = this.providerService.findBySurname(this.surname!, "recharge");
     if (!this.provider) {
       this.alertService.warn("Not Found", { keepAfterRouteChange: true });
       this.router.navigate(['../../'], { relativeTo: this.route });
