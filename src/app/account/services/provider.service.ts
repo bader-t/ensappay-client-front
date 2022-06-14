@@ -174,8 +174,13 @@ export class ProviderService {
   }
 
   public recharge(recharge: any) {
-    console.log('recharge', recharge)
     return this.http.post(paimentUrl + 'pay-recharge', recharge);
+  }
+  public donation(donation: any) {
+    return this.http.post(paimentUrl + 'pay-donation', donation);
+  }
+  public facture(facture: any) {
+    return this.http.post(paimentUrl + 'pay-facture', facture);
   }
 
 
