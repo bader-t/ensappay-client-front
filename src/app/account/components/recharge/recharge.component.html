@@ -14,22 +14,23 @@
           <div class="col-md-8">
             <legend>Remplir les champs suivants :</legend>
             <div class="mb-3">
-              <input type="tel" name="phone" formControlName="phone" class="form-control"
-                placeholder="Numéro du téléphone.." [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
-              <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-                <div *ngIf="f['phone'].errors['required']">Entrer un numéro du téléphone</div>
-                <div *ngIf="f['phone'].errors['pattern']">Entrer un numéro du téléphone valide</div>
+              <input type="tel" name="phone" formControlName="phoneNumber" class="form-control"
+                placeholder="Numéro du téléphone.."
+                [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
+              <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+                <div *ngIf="f['phoneNumber'].errors['required']">Entrer un numéro du téléphone</div>
+                <div *ngIf="f['phoneNumber'].errors['pattern']">Entrer un numéro du téléphone valide</div>
               </div>
             </div>
 
             <div class="mb-3">
-              <select formControlName="type" class="form-select"
-                [ngClass]="{ 'is-invalid': submitted && f['type'].errors }">
+              <select formControlName="creancierCode" class="form-select"
+                [ngClass]="{ 'is-invalid': submitted && f['creancierCode'].errors }">
                 <option value="" disabled>Choisir le type</option>
                 <option *ngFor="let type of provider?.rechargeTypes" [value]="type.code">{{type.name}}</option>
               </select>
-              <div *ngIf="submitted && f['type'].errors" class="invalid-feedback">
-                <div *ngIf="f['type'].errors['required']">Choisir le type</div>
+              <div *ngIf="submitted && f['creancierCode'].errors" class="invalid-feedback">
+                <div *ngIf="f['creancierCode'].errors['required']">Choisir le type</div>
               </div>
             </div>
 
@@ -38,14 +39,14 @@
                 [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }">
 
                 <option value="" disabled>Choisir le montant</option>
-                <option [ngValue]="10">10</option>
-                <option [ngValue]="20">20</option>
-                <option [ngValue]="25">25</option>
-                <option [ngValue]="30">30</option>
-                <option [ngValue]="50">50</option>
-                <option [ngValue]="100">100</option>
-                <option [ngValue]="200">200</option>
-                <option [ngValue]="300">300</option>
+                <option [ngValue]="'10'">10</option>
+                <option [ngValue]="'20'">20</option>
+                <option [ngValue]="'25'">25</option>
+                <option [ngValue]="'30'">30</option>
+                <option [ngValue]="'50'">50</option>
+                <option [ngValue]="'100'">100</option>
+                <option [ngValue]="'200'">200</option>
+                <option [ngValue]="'300'">300</option>
               </select>
               <div *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
                 <div *ngIf="f['amount'].errors['required']">Choisir le montant</div>
@@ -82,7 +83,7 @@
           </tr>
           <tr>
             <td class="title">Le Type :</td>
-            <td>{{type}}</td>
+            <td>{{creancierCode}}</td>
           </tr>
           <tr>
             <td class="title">Le Montant :</td>

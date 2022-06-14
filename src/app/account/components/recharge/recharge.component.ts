@@ -17,7 +17,7 @@ export class RechargeComponent implements OnInit {
   surname?: string;
 
   phone?: string;
-  type?: string;
+  creancierCode?: string;
   amount?: string;
   date?: string;
 
@@ -42,8 +42,8 @@ export class RechargeComponent implements OnInit {
   }
 
   rechargeForm = new FormGroup({
-    phone: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
-    type: new FormControl('', Validators.required),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
+    creancierCode: new FormControl('', Validators.required),
     amount: new FormControl('', Validators.required),
   });
 
@@ -78,8 +78,8 @@ export class RechargeComponent implements OnInit {
       return;
     }
     this.date = (new Date()).toLocaleDateString();
-    this.phone = this.f['phone'].value;
-    this.type = this.f['type'].value;
+    this.phone = this.f['phoneNumber'].value;
+    this.creancierCode = this.f['creancierCode'].value;
     this.amount = this.f['amount'].value;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

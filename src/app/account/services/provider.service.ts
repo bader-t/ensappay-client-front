@@ -5,7 +5,7 @@ import { TokenStorageService } from 'src/app/auth/services/token-storage.service
 import { Creance } from '../models/creance.model';
 import { Provider, RechargeType } from '../models/provider.model';
 
-const providerUrl = 'http://localhost:8080/api/providers';
+const paimentUrl = 'http://localhost:8080/cmi-rest/';
 
 @Injectable({
   providedIn: 'root'
@@ -174,8 +174,8 @@ export class ProviderService {
   }
 
   public recharge(recharge: any) {
-    // return this.http.post(providerUrl + 'recharge', recharge);
-    return of(true);
+    console.log('recharge', recharge)
+    return this.http.post(paimentUrl + 'pay-recharge', recharge);
   }
 
 
