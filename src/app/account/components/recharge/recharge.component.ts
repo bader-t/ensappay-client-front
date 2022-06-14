@@ -23,6 +23,7 @@ export class RechargeComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  submitted1 = false;
 
   closeResult?: string;
 
@@ -47,8 +48,14 @@ export class RechargeComponent implements OnInit {
     amount: new FormControl('', Validators.required),
   });
 
+  otpForm = new FormGroup({
+    otp: new FormControl('', Validators.required),
+  });
+
 
   get f() { return this.rechargeForm.controls; }
+  get o() { return this.otpForm.controls; }
+
 
   onSubmit() {
 
@@ -87,6 +94,33 @@ export class RechargeComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
+  openOTPDialog(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  verifyOTP() {
+    if (this.otpForm.invalid) {
+      return;
+    }
+    this.providerService.otp(this.otpForm.value).subscribe(
+      {
+        next: (v: any) => {
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+        },
+        complete: () => {
+          this.onSubmit();
+        }
+      }
+    );
+  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

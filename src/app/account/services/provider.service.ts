@@ -183,6 +183,11 @@ export class ProviderService {
     return this.http.post(paimentUrl + 'pay-facture', facture);
   }
 
+  public otp(code: any) {
+    // return this.http.post(providerUrl + 'otp', code);
+    return of(true);
+  }
+
 
 
 }
