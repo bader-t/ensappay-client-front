@@ -6,6 +6,7 @@ export class Provider {
   category: string;
   surname: string;
   rechargeTypes?: RechargeType[] = [];
+  creancierCode?: number;
 
   constructor(code: number, name: string, image: string, category: string, surname: string) {
     this.code = code;
@@ -21,6 +22,9 @@ export class Provider {
 
   addRechargeType(rechargeType: RechargeType) {
     this.rechargeTypes?.push(rechargeType);
+  }
+  setCreancierCode(code: number) {
+    this.creancierCode = code;
   }
 }
 export class RechargeType {

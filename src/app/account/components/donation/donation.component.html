@@ -1,88 +1,109 @@
 <div class="container mt-3 pt-3">
 
-    <div class="card col-12 col-sm-10 col-md-11 m-auto">
-        <div class="card-body bg-light">
-            <h4 class="mb-3 my-2">Faire une donation</h4>
-            <hr />
-            <form [formGroup]="rechargeForm" (ngSubmit)="openDialog(content)" class="bg-white p-3">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="{{provider?.image}}" style="height:150px;" class="mx-auto d-block" alt="">
-                        <h4 class="text-center">{{provider?.name}}</h4>
-                    </div>
+  <div class="card col-12 col-sm-10 col-md-11 m-auto">
+    <div class="card-body bg-light">
+      <h4 class="mb-3 my-2">Faire une donation</h4>
+      <hr />
+      <form [formGroup]="donationForm" (ngSubmit)="openDialog(content)" class="bg-white p-3">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="{{provider?.image}}" style="height:150px;" class="mx-auto d-block" alt="">
+            <h4 class="text-center">{{provider?.name}}</h4>
+          </div>
 
-                    <div class="col-md-8">
-                        <legend>Remplir les champs suivants :</legend>
-                        <div class="mb-3">
-                          
+          <div class="col-md-8">
+            <legend>Remplir les champs suivants :</legend>
+            <div class="mb-3">
 
-                            <input type="number" formControlName="amount" class="form-control"
-                                placeholder="Montant.."
-                                [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }" />
 
-                            <div *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
-                                <div *ngIf="f['amount'].errors['required']">Entrer un montant !</div>
-                                <div *ngIf="f['amount'].errors['min']">Entrer que des nombre si il vous plaît !
-                                </div>
-                            </div>
+              <input type="number" formControlName="amount" class="form-control" placeholder="Montant.."
+                [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }" />
 
-                        </div>
-
-                        <div class="form-group d-flex justify-content-end mt-3">
-                            <button [disabled]="loading" class="btn btn-primary ms-2">
-                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                                Suivant
-                            </button>
-                        </div>
-                    </div>
+              <div *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
+                <div *ngIf="f['amount'].errors['required']">Entrer un montant !</div>
+                <div *ngIf="f['amount'].errors['min']">Entrer un montant valid!
                 </div>
-            </form>
-        </div>
+              </div>
 
+            </div>
+
+            <div class="form-group d-flex justify-content-end mt-3">
+              <button [disabled]="loading" class="btn btn-primary ms-2">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Suivant
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
 
-
-    <ng-template #content let-modal>
-<<<<<<< HEAD
-=======
-        
->>>>>>> main
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Récapitulation</h4>
-            <button type="button" class="btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')">
-               
-            </button>
-        </div>
-        <div class="modal-body">
-            <table class="table table-hover">
-                <tbody>
-                    <tr>
-                        <td class="title">Débiteur :</td>
-                        <td>{{nom}}</td>
-                    </tr>
-                    <tr>
-                        <td class="title">Montant :</td>
-                        <td>{{amount}}</td>
-                    </tr>
-                    <tr>
-                        <td class="title">Bénéficiaire :</td>
-                        <td>{{provider?.name}}</td>
-                    </tr>
-                    <tr>
-                        <td class="title">Date :</td>
-                        <td>{{date}}</td>
-                    </tr>
+  </div>
 
 
-                </tbody>
-            </table>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Récapitulation</h4>
+      <button type="button" class="btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+      </button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td class="title">Débiteur :</td>
+            <td>{{nom}}</td>
+          </tr>
+          <tr>
+            <td class="title">Montant :</td>
+            <td>{{amount}}</td>
+          </tr>
+          <tr>
+            <td class="title">Bénéficiaire :</td>
+            <td>{{provider?.name}}</td>
+          </tr>
+          <tr>
+            <td class="title">Date :</td>
+            <td>{{date}}</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+      <button type="button" class="btn btn-outline-dark" (click)="openOTPDialog(otp)">Valider</button>
+    </div>
+  </ng-template>
+
+
+  <ng-template #otp let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Code de confirmation</h4>
+      <button type="button" class="btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="otpForm" class="bg-white p-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="">
+              <input type="text" name="otp" formControlName="otp" class="form-control"
+                placeholder="Code de confirmation.." [ngClass]="{ 'is-invalid': submitted1 && o['otp'].errors }" />
+              <div *ngIf="submitted1 && o['otp'].errors" class="invalid-feedback">
+                <!-- <div *ngIf="f['otp'].errors['required']">Entrer le code de vérification</div>
+                <div *ngIf="f['otp'].errors['pattern']">code invalide</div> -->
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
-            <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Valider</button>
-        </div>
-<<<<<<< HEAD
-=======
-    
->>>>>>> main
-    </ng-template>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+      <button type="button" class="btn btn-outline-dark" (click)="verifyOTP()">Valider</button>
+    </div>
+  </ng-template>

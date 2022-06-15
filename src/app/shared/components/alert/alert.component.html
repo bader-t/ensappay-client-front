@@ -1,8 +1,5 @@
 <div *ngFor="let alert of alerts" class="{{cssClass(alert)}}">
-  <span class="ps-2" [innerHTML]="alert.message"></span>
-
-  <a class="close" data-dismiss="alert" aria-label="Close" (click)="removeAlert(alert)">
-    <span aria-hidden="true">&times;</span>
-  </a>
-
+  <div class="d-flex justify-content-between"><span [innerHTML]="alert.message"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
@@ -31,6 +32,7 @@ export class FactureComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  submitted1 = false;
 
   closeResult?: string;
 
@@ -61,6 +63,12 @@ export class FactureComponent implements OnInit {
     }
 
   }
+
+  otpForm = new FormGroup({
+    otp: new FormControl('', Validators.required),
+  });
+  get o() { return this.otpForm.controls; }
+
   getAllCreances(code: number): void {
     this.providerService.getFactures(code).subscribe({
       next: (data: any) => {
@@ -77,17 +85,19 @@ export class FactureComponent implements OnInit {
   onSubmit() {
     this.creanceSelected = [];
 
-    this.creances.map((val) => {
+    // this.creances.map((val) => {
 
-      if (val.selected) {
-        this.creanceSelected?.push(val);
+    //   if (val.selected) {
+    //     this.creanceSelected?.push(val);
 
-      } else {
+    //   } else {
 
-      }
-    }
-    );
-    console.log(this.creanceSelected);
+    //   }
+    // }
+
+    // );
+    this.creanceSelected = this.creances.filter(creance => creance.selected);
+    console.log('selected', this.creanceSelected);
 
   }
 
@@ -121,6 +131,31 @@ export class FactureComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+  openOTPDialog(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  verifyOTP() {
+    if (this.otpForm.invalid) {
+      return;
+    }
+    this.providerService.otp(this.otpForm.value).subscribe(
+      {
+        next: (v: any) => {
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+        },
+        complete: () => {
+          this.onSubmit();
+        }
+      }
+    );
   }
 
   private getDismissReason(reason: any): string {

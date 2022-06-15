@@ -26,6 +26,7 @@ export class DonationComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  submitted1 = false;
 
   closeResult?: string;
 
@@ -36,7 +37,6 @@ export class DonationComponent implements OnInit {
     private alertService: AlertService,
     private modalService: NgbModal) {
 
-    //get client data from the auth service
     this.client = this.authStorageService.getClient();
     this.nom = this.client.name + " " + this.client.surname;
 
@@ -46,21 +46,28 @@ export class DonationComponent implements OnInit {
     this.surname = this.route.snapshot.params['surname'];
     this.provider = this.providerService.findBySurname(this.surname!, "donation");
     if (!this.provider) {
-      this.alertService.warn("Not Found", { keepAfterRouteChange: true });
+      this.alertService.warn("Introuvable", { keepAfterRouteChange: true });
       this.router.navigate(['../../'], { relativeTo: this.route });
     }
   }
 
-  rechargeForm = new FormGroup({
-    amount: new FormControl('', [Validators.required, Validators.min(10)]),
+  donationForm = new FormGroup({
+    amount: new FormControl('', [Validators.required, Validators.min(1)]),
   });
 
+  otpForm = new FormGroup({
+    otp: new FormControl('', Validators.required),
+  });
 
-  get f() { return this.rechargeForm.controls; }
+  get o() { return this.otpForm.controls; }
+  get f() { return this.donationForm.controls; }
 
   onSubmit() {
 
-    this.providerService.recharge(this.rechargeForm.value).subscribe(
+    this.providerService.donation({
+      phoneNumber: this.authStorageService.getClient().phoneNumber,
+      creancierCode: this.provider?.creancierCode, ...this.donationForm.value
+    }).subscribe(
       {
         next: (v: any) => {
           this.loading = false;
@@ -82,7 +89,7 @@ export class DonationComponent implements OnInit {
   openDialog(content: any) {
     this.submitted = true;
     this.alertService.clear();
-    if (this.rechargeForm.invalid) {
+    if (this.donationForm.invalid) {
       return;
     }
     this.date = (new Date()).toLocaleDateString();
@@ -93,6 +100,34 @@ export class DonationComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
+
+  openOTPDialog(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  verifyOTP() {
+    if (this.otpForm.invalid) {
+      return;
+    }
+    this.providerService.otp(this.otpForm.value).subscribe(
+      {
+        next: (v: any) => {
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+        },
+        complete: () => {
+          this.onSubmit();
+        }
+      }
+    );
+  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

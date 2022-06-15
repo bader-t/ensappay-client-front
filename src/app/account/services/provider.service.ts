@@ -90,6 +90,8 @@ export class ProviderService {
               } else {
                 if (provider.products?.findIndex(p => p == creancierName) == -1) {
                   provider.addProduct(creancierName!);
+                  if (provider.category === "donation")
+                    provider.setCreancierCode(creancierCode);
                 }
               }
               this.providers.push(provider);
@@ -169,14 +171,13 @@ export class ProviderService {
     return this.providers.find(provider => (provider.surname).toLowerCase() == surname?.toLocaleLowerCase() && provider.category == category);
   }
 
-  findProvider(code: number): Provider | undefined {
-    return this.providers.find(provider => provider.code == code);
-  }
 
   public recharge(recharge: any) {
     return this.http.post(paimentUrl + 'pay-recharge', recharge);
   }
   public donation(donation: any) {
+
+    console.log('f', donation)
     return this.http.post(paimentUrl + 'pay-donation', donation);
   }
   public facture(facture: any) {

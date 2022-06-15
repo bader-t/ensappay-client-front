@@ -37,7 +37,7 @@ export class RechargeComponent implements OnInit {
     this.surname = this.route.snapshot.params['surname'];
     this.provider = this.providerService.findBySurname(this.surname!, "recharge");
     if (!this.provider) {
-      this.alertService.warn("Not Found", { keepAfterRouteChange: true });
+      this.alertService.warn("Introuvable", { keepAfterRouteChange: true });
       this.router.navigate(['../../'], { relativeTo: this.route });
     }
   }
