@@ -41,14 +41,14 @@ export class LoginComponent implements OnInit {
           this.tokenStorage.saveRefreshToken(data.headers.get('refresh_token'));
           this.tokenStorage.setIsFirstLogin(data.body.firstLogin);
           this.tokenStorage.saveClient(data.body.clientProfile);
-          this.alertService.success("Succé");
+          this.alertService.success("Succés");
           this.router.navigate(['']);
         },
         error: (e: any) => {
-          this.alertService.error(e.error.message);
+          this.alertService.error("Login ou mot de passe incorrects");
         },
         complete: () => {
-          this.alertService.success("Succé");
+          this.alertService.success("Succés");
           this.router.navigate(['']);
         }
       }
