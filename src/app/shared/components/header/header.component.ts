@@ -10,9 +10,12 @@ import { TokenStorageService } from 'src/app/auth/services/token-storage.service
 })
 export class HeaderComponent implements OnInit {
 
+  clientName: string = "";
+
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
+    this.clientName = this.authService.getClientName();
   }
 
   logout() {
