@@ -8,8 +8,8 @@ const accountModule = () => import('./account/account.module').then(x => x.Accou
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'auth', loadChildren: authModule  },
-  { path: 'account', loadChildren: accountModule  },
+  { path: 'auth', loadChildren: authModule },
+  { path: 'account', loadChildren: accountModule, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 
