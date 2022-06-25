@@ -70,7 +70,7 @@ export class RechargeComponent implements OnInit {
         },
         complete: () => {
           this.modalService.dismissAll();
-          this.alertService.success("Operation effectuée avec succé");
+          this.alertService.success("Operation effectuée avec succés");
         }
       }
     );
