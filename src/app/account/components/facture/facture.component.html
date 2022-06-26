@@ -2,58 +2,58 @@
 
   <div class="card col-12 col-sm-10 col-md-11 m-auto">
     <div class="card-body bg-light">
-      <h4 class="mb-3 my-2 card-header">Paiement des factures</h4>
-
-
-      <div class="row">
-        <div class="col-md-2">
-          <img src="../../assets/images/{{provider?.image}}" style="height:60px;" class="mx-auto d-block" alt="">
+      <h4 class="mb-3 border-bottom border-1 pb-3 my-2">Paiement des factures</h4>
+      <div class="card">
+        <div class="row bg-white mx-2 py-4">
+          <div class="col-md-2">
+            <img src="../../assets/images/{{provider?.image}}" style="height:60px;" class="mx-auto d-block" alt="">
+          </div>
+          <div class="col-md-3">
+            <h4>Créancier</h4>
+            <h6>{{provider?.name}}</h6>
+          </div>
+          <div class="col-md-7">
+            <h4>Débiteur</h4>
+            <h6>{{nom}}</h6>
+          </div>
         </div>
-        <div class="col-md-3">
-          <h4>Créancier</h4>
-          <h6>{{provider?.name}}</h6>
-        </div>
-        <div class="col-md-3">
-          <h4>Débiteur</h4>
-          <h6>{{nom}}</h6>
-        </div>
-
       </div>
+      <div class="card mt-3 pb-2">
+        <h4 class="mb-3 card-header rounded-top">Seléctionner pour payer</h4>
+        <div class="accordion-item mb-2 mx-3" *ngFor="let creance of creances">
 
-      <h4 class="mb-3 mt-5 my-2 card-header ">Seléctionner pour payer</h4>
-      <div class="accordion-item mb-2 mx-3" *ngFor="let creance of creances">
+          <div class="row p-2">
 
-        <div class="row p-2">
-
-          <div class="col">
-            <input class="form-check-input" name="{{creance.code}}" (change)="onChange(creance.code)" type="checkbox"
-              value="{{creance.code}}" id="check{{creance.code}}">
-            <label class="form-check-label px-2" for="defaultCheck1">
-              {{creance.code}}. {{creance.creancier}}
-            </label>
+            <div class="col">
+              <input class="form-check-input" name="{{creance.code}}" (change)="onChange(creance.code)" type="checkbox"
+                value="{{creance.code}}" id="check{{creance.code}}">
+              <label class="form-check-label px-2" for="defaultCheck1">
+                {{creance.code}}. {{creance.creancier}}
+              </label>
 
 
-            <div class="px-4">
+              <div class="px-4">
 
+              </div>
             </div>
+
+            <div class="col">
+
+
+              <div class="" style="color:green; text-align:center; ">
+                {{creance.amount}}
+              </div>
+            </div>
+
+
           </div>
 
-          <div class="col">
-
-
-            <div class="" style="color:green; text-align:center; ">
-              {{creance.amount}}
-            </div>
-          </div>
-
-
         </div>
-
-      </div>
-      <div class="m-auto " *ngIf="creances.length==0">
-        <hr>
-        <h5>Vous avez aucunes facture a payer</h5>
-        <hr>
+        <div class="m-auto " *ngIf="creances.length==0">
+          <hr>
+          <span>Vous avez aucunes facture a payer</span>
+          <hr>
+        </div>
       </div>
 
       <div class="form-group d-flex justify-content-end mt-3">
