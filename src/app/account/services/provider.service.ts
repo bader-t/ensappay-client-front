@@ -193,6 +193,10 @@ export class ProviderService {
     return this.http.post(otpUrl + 'otp-verification', otp);
   }
 
+  public consultBalance(phone: string) {
+    return this.http.post(paimentUrl + 'consult-balance', { phoneNumber: phone });
+  }
+
 
 
 }
