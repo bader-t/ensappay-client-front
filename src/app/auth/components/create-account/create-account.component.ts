@@ -57,7 +57,11 @@ export class CreateAccountComponent implements OnInit {
           this.loading = false;
         },
         complete: () => {
-          this.alertService.success("Votre demande est envoyée avec succé");
+          this.alertService.success("Votre demande est envoyée avec succés");
+          this.accountForm.reset();
+          Object.keys(this.accountForm.controls).forEach(key => {
+            this.accountForm.get(key)!.setErrors(null);
+          });
         }
       }
     );
