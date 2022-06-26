@@ -103,7 +103,15 @@ export class DonationComponent implements OnInit {
 
 
   openOTPDialog(content: any) {
-    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber());
+    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber()).subscribe({
+      next: (v: any) => {
+      },
+      error: (e: any) => {
+        console.log(e)
+      },
+      complete: () => {
+      }
+    });;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

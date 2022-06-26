@@ -99,7 +99,15 @@ export class RechargeComponent implements OnInit {
   }
 
   openOTPDialog(content: any) {
-    this.providerService.sendOTP(this.rechargeForm.value.phoneNumber);
+    this.providerService.sendOTP(this.rechargeForm.value.phoneNumber).subscribe({
+      next: (v: any) => {
+      },
+      error: (e: any) => {
+        console.log(e)
+      },
+      complete: () => {
+      }
+    });
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

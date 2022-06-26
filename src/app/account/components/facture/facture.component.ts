@@ -20,6 +20,7 @@ export class FactureComponent implements OnInit {
   creanceAppartient: Creance[] = [];
 
   creanceSelected: Creance[] = [];
+  creanceSelectedCodes: number[] = [];
 
   provider?: Provider;
   surname?: string;
@@ -85,20 +86,10 @@ export class FactureComponent implements OnInit {
 
   onSubmit() {
     this.creanceSelected = [];
-
-    // this.creances.map((val) => {
-
-    //   if (val.selected) {
-    //     this.creanceSelected?.push(val);
-
-    //   } else {
-
-    //   }
-    // }
-
-    // );
     this.creanceSelected = this.creances.filter(creance => creance.selected);
+    this.creanceSelectedCodes = this.creances.map(creance => creance.code!)
     console.log('selected', this.creanceSelected);
+    console.log('codes', this.creanceSelectedCodes);
 
   }
 
@@ -134,7 +125,15 @@ export class FactureComponent implements OnInit {
     });
   }
   openOTPDialog(content: any) {
-    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber());
+    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber()).subscribe({
+      next: (v: any) => {
+      },
+      error: (e: any) => {
+        console.log(e)
+      },
+      complete: () => {
+      }
+    });;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -153,10 +152,10 @@ export class FactureComponent implements OnInit {
           this.otpError = false;
         },
         error: (e: any) => {
-          this.otpError = true;
+          this.otpError = true; this.onSubmit();
         },
         complete: () => {
-          this.onSubmit();
+
         }
       }
     );
