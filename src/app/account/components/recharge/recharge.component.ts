@@ -5,6 +5,7 @@ import { Provider } from '../../models/provider.model';
 import { ProviderService } from '../../services/provider.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
 
 @Component({
   selector: 'app-recharge',
@@ -26,6 +27,8 @@ export class RechargeComponent implements OnInit {
   submitted1 = false;
 
   closeResult?: string;
+
+  otpError: boolean = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -96,6 +99,7 @@ export class RechargeComponent implements OnInit {
   }
 
   openOTPDialog(content: any) {
+    this.providerService.sendOTP(this.rechargeForm.value.phoneNumber);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -104,15 +108,17 @@ export class RechargeComponent implements OnInit {
   }
 
   verifyOTP() {
+    this.submitted1 = true;
     if (this.otpForm.invalid) {
       return;
     }
-    this.providerService.otp(this.otpForm.value).subscribe(
+    this.providerService.verifyOTP({ ...this.otpForm.value, phone: this.rechargeForm.value.phoneNumber }).subscribe(
       {
         next: (v: any) => {
+          this.otpError = false;
         },
         error: (e: any) => {
-          this.alertService.error(e.statusText);
+          this.otpError = true;
         },
         complete: () => {
           this.onSubmit();
