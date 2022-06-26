@@ -27,6 +27,15 @@ export class TokenStorageService {
     window.localStorage.setItem('firstLogin', isFirstLogin);
   }
 
+  public setPhoneNumber(phoneNumber: string): void {
+    window.localStorage.setItem('phoneNumber', phoneNumber);
+  }
+
+  public getPhoneNumber(): string | null {
+    return window.localStorage.getItem('phoneNumber');
+  }
+
+
   public getIsFirstLogin(): boolean | null {
     return window.localStorage.getItem('firstLogin') === 'true';
   }
