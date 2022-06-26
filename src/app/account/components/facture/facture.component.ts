@@ -35,6 +35,7 @@ export class FactureComponent implements OnInit {
   submitted1 = false;
 
   closeResult?: string;
+  otpError: boolean = false;
 
   constructor(
     private router: Router,
@@ -133,6 +134,7 @@ export class FactureComponent implements OnInit {
     });
   }
   openOTPDialog(content: any) {
+    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber());
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -141,15 +143,17 @@ export class FactureComponent implements OnInit {
   }
 
   verifyOTP() {
+    this.submitted1 = true;
     if (this.otpForm.invalid) {
       return;
     }
-    this.providerService.otp(this.otpForm.value).subscribe(
+    this.providerService.verifyOTP({ ...this.otpForm.value, phone: this.tokenStorageService.getPhoneNumber() }).subscribe(
       {
         next: (v: any) => {
+          this.otpError = false;
         },
         error: (e: any) => {
-          this.alertService.error(e.statusText);
+          this.otpError = true;
         },
         complete: () => {
           this.onSubmit();
