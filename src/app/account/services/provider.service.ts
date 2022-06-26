@@ -6,6 +6,7 @@ import { Creance } from '../models/creance.model';
 import { Provider, RechargeType } from '../models/provider.model';
 
 const paimentUrl = 'http://localhost:8080/cmi-rest/';
+const otpUrl = 'http://localhost:8080/verification/';
 
 @Injectable({
   providedIn: 'root'
@@ -184,9 +185,12 @@ export class ProviderService {
     return this.http.post(paimentUrl + 'pay-facture', facture);
   }
 
-  public otp(code: any) {
-    // return this.http.post(providerUrl + 'otp', code);
-    return of(true);
+  public sendOTP(phone: any) {
+    console.log('phone', { phone })
+    return this.http.post(otpUrl + 'send-code', { phone });
+  }
+  public verifyOTP(otp: any) {
+    return this.http.post(otpUrl + 'otp-verification', otp);
   }
 
 
