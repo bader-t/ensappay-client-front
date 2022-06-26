@@ -20,7 +20,7 @@ export class FactureComponent implements OnInit {
   creanceAppartient: Creance[] = [];
 
   creanceSelected: Creance[] = [];
-  creanceSelectedCodes: number[] = [];
+  creanceSelectedCodes: string[] = [];
 
   provider?: Provider;
   surname?: string;
@@ -87,10 +87,25 @@ export class FactureComponent implements OnInit {
   onSubmit() {
     this.creanceSelected = [];
     this.creanceSelected = this.creances.filter(creance => creance.selected);
-    this.creanceSelectedCodes = this.creances.map(creance => creance.code!)
-    console.log('selected', this.creanceSelected);
-    console.log('codes', this.creanceSelectedCodes);
-
+    this.creanceSelectedCodes = this.creanceSelected.map(creance => (creance.code!).toString());
+    this.providerService.facture({
+      phoneNumber: this.tokenStorageService.getPhoneNumber(),
+      creanceCodes: this.creanceSelectedCodes
+    }).subscribe(
+      {
+        next: (v: any) => {
+          this.loading = false;
+        },
+        error: (e: any) => {
+          this.alertService.error(e.statusText);
+          this.loading = false;
+        },
+        complete: () => {
+          this.modalService.dismissAll();
+          this.alertService.success("Operation effectuée avec succé");
+        }
+      }
+    );
   }
 
   onChange(code: any) {
@@ -103,10 +118,8 @@ export class FactureComponent implements OnInit {
 
         if (val.selected) {
           this.total = this.total! + val.amount!;
-          console.log("new total", this.total);
         } else {
           this.total = this.total! - val.amount!;
-          console.log("new total", this.total);
         }
       }
     });
@@ -120,6 +133,7 @@ export class FactureComponent implements OnInit {
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
+
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -136,6 +150,7 @@ export class FactureComponent implements OnInit {
     });;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
+      this.otpError = false;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -152,10 +167,10 @@ export class FactureComponent implements OnInit {
           this.otpError = false;
         },
         error: (e: any) => {
-          this.otpError = true; this.onSubmit();
+          this.otpError = true;
         },
         complete: () => {
-
+          this.onSubmit();
         }
       }
     );
