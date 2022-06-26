@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/auth/services/token-storage.service';
@@ -18,7 +18,6 @@ export class DonationComponent implements OnInit {
   surname?: string;
 
   client: any;
-  // static min(min: number): ValidatorFn;
 
   nom?: string;
   amount?: string;
@@ -29,15 +28,16 @@ export class DonationComponent implements OnInit {
   submitted1 = false;
 
   closeResult?: string;
+  otpError: boolean = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private providerService: ProviderService,
-    private authStorageService: TokenStorageService,
     private alertService: AlertService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private tokenStorageService: TokenStorageService) {
 
-    this.client = this.authStorageService.getClient();
+    this.client = this.tokenStorageService.getClient();
     this.nom = this.client.name + " " + this.client.surname;
 
   }
@@ -65,7 +65,7 @@ export class DonationComponent implements OnInit {
   onSubmit() {
 
     this.providerService.donation({
-      phoneNumber: this.authStorageService.getClient().phoneNumber,
+      phoneNumber: this.tokenStorageService.getClient().phoneNumber,
       creancierCode: this.provider?.creancierCode, ...this.donationForm.value
     }).subscribe(
       {
@@ -103,6 +103,7 @@ export class DonationComponent implements OnInit {
 
 
   openOTPDialog(content: any) {
+    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber());
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -111,15 +112,17 @@ export class DonationComponent implements OnInit {
   }
 
   verifyOTP() {
+    this.submitted1 = true;
     if (this.otpForm.invalid) {
       return;
     }
-    this.providerService.otp(this.otpForm.value).subscribe(
+    this.providerService.verifyOTP({ ...this.otpForm.value, phone: this.tokenStorageService.getPhoneNumber() }).subscribe(
       {
         next: (v: any) => {
+          this.otpError = false;
         },
         error: (e: any) => {
-          this.alertService.error(e.statusText);
+          this.otpError = true;
         },
         complete: () => {
           this.onSubmit();
