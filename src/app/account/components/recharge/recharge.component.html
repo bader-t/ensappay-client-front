@@ -39,14 +39,14 @@
                 [ngClass]="{ 'is-invalid': submitted && f['amount'].errors }">
 
                 <option value="" disabled>Choisir le montant</option>
-                <option [ngValue]="'10'">10</option>
-                <option [ngValue]="'20'">20</option>
-                <option [ngValue]="'25'">25</option>
-                <option [ngValue]="'30'">30</option>
-                <option [ngValue]="'50'">50</option>
-                <option [ngValue]="'100'">100</option>
-                <option [ngValue]="'200'">200</option>
-                <option [ngValue]="'300'">300</option>
+                <option [ngValue]="'10'">10 DH</option>
+                <option [ngValue]="'20'">20 DH</option>
+                <option [ngValue]="'25'">25 DH</option>
+                <option [ngValue]="'30'">30 DH</option>
+                <option [ngValue]="'50'">50 DH</option>
+                <option [ngValue]="'100'">100 DH</option>
+                <option [ngValue]="'200'">200 DH</option>
+                <option [ngValue]="'300'">300 DH</option>
               </select>
               <div *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
                 <div *ngIf="f['amount'].errors['required']">Choisir le montant</div>
@@ -118,10 +118,11 @@
           <div class="col-md-12">
             <div class="">
               <input type="text" name="otp" formControlName="otp" class="form-control"
-                placeholder="Code de confirmation.." [ngClass]="{ 'is-invalid': submitted1 && o['otp'].errors }" />
-              <div *ngIf="submitted1 && o['otp'].errors" class="invalid-feedback">
-                <!-- <div *ngIf="f['otp'].errors['required']">Entrer le code de vérification</div>
-                <div *ngIf="f['otp'].errors['pattern']">code invalide</div> -->
+                placeholder="Code de confirmation.." (onkeydown)="otpError = false"
+                [ngClass]="{ 'is-invalid': submitted1  && (otpError || o['otp'].errors) }" />
+              <div *ngIf="submitted1  && (otpError || o['otp'].errors)" class="invalid-feedback">
+                <div *ngIf="submitted1  && (otpError || o['otp'].errors)">Code invalide
+                </div>
               </div>
             </div>
           </div>
