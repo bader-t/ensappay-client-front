@@ -65,8 +65,9 @@ export class DonationComponent implements OnInit {
   onSubmit() {
 
     this.providerService.donation({
-      phoneNumber: this.tokenStorageService.getClient().phoneNumber,
-      creancierCode: this.provider?.creancierCode, ...this.donationForm.value
+      phoneNumber: this.tokenStorageService.getPhoneNumber(),
+      creancierCode: this.provider?.creancierCode?.toString(),
+      amount: this.donationForm.value.amount.toString()
     }).subscribe(
       {
         next: (v: any) => {
