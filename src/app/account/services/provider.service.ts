@@ -5,8 +5,8 @@ import { TokenStorageService } from 'src/app/auth/services/token-storage.service
 import { Creance } from '../models/creance.model';
 import { Provider, RechargeType } from '../models/provider.model';
 
-const paimentUrl = 'http://localhost:8080/cmi-rest/';
-const otpUrl = 'http://localhost:8080/verification/';
+const paimentUrl = 'https://ensa-pay-2022.herokuapp.com/cmi-rest/';
+const otpUrl = 'https://ensa-pay-2022.herokuapp.com/verification/';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class ProviderService {
 
   getCreditors(): void {
     const xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'http://localhost:8080/cmi-soap/creanciersList', true);
+    xmlhttp.open('POST', 'https://ensa-pay-2022.herokuapp.com/cmi-soap/creanciersList', true);
     const sr =
       `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cre="http://www.ebanking.ensa/accountservice/Soap/Request/CreanciersList/">
             <soapenv:Header/>
@@ -111,7 +111,7 @@ export class ProviderService {
 
   getCreances(status: string, codeI: number | null): void {
     const xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'http://localhost:8080/cmi-soap/creancesList', true);
+    xmlhttp.open('POST', 'https://ensa-pay-2022.herokuapp.com/cmi-soap/creancesList', true);
     const sr =
       `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cre="http://www.ebanking.ensa/accountservice/Soap/Request/CreancesList/">
             <soapenv:Header/>

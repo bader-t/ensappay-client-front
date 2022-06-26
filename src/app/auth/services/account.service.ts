@@ -11,7 +11,7 @@ export class AccountService {
   private clientUrl: string;
 
   constructor(private http: HttpClient) {
-    this.clientUrl = 'http://localhost:8080/api/account/client/';
+    this.clientUrl = 'https://ensa-pay-2022.herokuapp.com/api/account/client/';
   }
 
   public register(client: Client): Observable<Client> {
