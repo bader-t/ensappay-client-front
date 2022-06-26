@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.tokenStorage.saveToken(data.headers.get('access_token'));
           this.tokenStorage.saveRefreshToken(data.headers.get('refresh_token'));
           this.tokenStorage.setIsFirstLogin(data.body.firstLogin);
+          this.tokenStorage.setPhoneNumber(data.body.phoneNumber);
           this.tokenStorage.saveClient(data.body.clientProfile);
           this.alertService.success("Succés");
           this.router.navigate(['']);
