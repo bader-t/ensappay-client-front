@@ -34,7 +34,8 @@ export class RechargeComponent implements OnInit {
     private route: ActivatedRoute,
     private providerService: ProviderService,
     private alertService: AlertService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.surname = this.route.snapshot.params['surname'];
@@ -99,7 +100,7 @@ export class RechargeComponent implements OnInit {
   }
 
   openOTPDialog(content: any) {
-    this.providerService.sendOTP(this.rechargeForm.value.phoneNumber).subscribe({
+    this.providerService.sendOTP(this.tokenStorageService.getPhoneNumber()).subscribe({
       next: (v: any) => {
       },
       error: (e: any) => {
